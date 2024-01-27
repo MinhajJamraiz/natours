@@ -45,6 +45,17 @@ exports.getLoginForm = (req, res) => {
   });
 };
 
+exports.getSignupForm = (req, res) => {
+  //1> Get User from the collection
+
+  //2> Create Template
+
+  //3> Send Data from 1
+  res.status(200).render('signup', {
+    title: 'Create a new account',
+  });
+};
+
 exports.getAccount = (req, res) => {
   res.status(200).render('account', {
     title: 'Your Account',
