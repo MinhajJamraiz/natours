@@ -28,8 +28,8 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+//----------------------------------------------------------------
 //GLOBAL Middlewares
-
 //Serving Static files Middleware.
 // app.use(express.static(`${__dirname}/public`));
 app.use(express.static(path.join(__dirname, 'public')));
