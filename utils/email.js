@@ -2,6 +2,8 @@ const nodemailer = require('nodemailer');
 const pug = require('pug');
 const { htmlToText } = require('html-to-text');
 
+const logger = require('./../logger');
+
 module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
@@ -48,6 +50,7 @@ module.exports = class Email {
       // html
     };
     //3>Create a transport and send email
+    logger.info('Just before mail sending.');
     await this.newTransport().sendMail(mailOptions);
   }
   async sendWelcome() {
