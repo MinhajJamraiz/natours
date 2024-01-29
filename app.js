@@ -12,6 +12,7 @@ const hpp = require('hpp');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
+const cors = require('cors');
 
 const rateLimit = require('express-rate-limit');
 const tourRouter = require('./routes/tourRoutes');
@@ -31,6 +32,14 @@ app.set('views', path.join(__dirname, 'views'));
 //----------------------------------------------------------------
 //GLOBAL Middlewares
 //Serving Static files Middleware.
+
+//CORS middleware
+app.use(cors());
+//Access Control Allow Origin
+//for simple request like GET, POST
+app.options('*', cors());
+//For non simple requests like DELETE PATCH PUT
+
 // app.use(express.static(`${__dirname}/public`));
 app.use(express.static(path.join(__dirname, 'public')));
 
