@@ -35,8 +35,6 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
-  logger.info('Just before user create.');
-
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,

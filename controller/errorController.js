@@ -1,12 +1,13 @@
 const logger = require('./../logger');
 const AppError = require('./../utils/appError');
+
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
   return new AppError(message, 400);
 };
 const handleDuplicateFieldsDB = (err) => {
-  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
-  const message = `Duplicate field value ${value}. Please use another value.`;
+  const value = err.message.match(/(["'])(\\?.)*?\1/)[0];
+  const message = `Email ${value} already exists. Please use another value.`;
   return new AppError(message, 400);
 };
 const handleValidationErrorDB = (err) => {
@@ -44,6 +45,8 @@ const sendErrorProd = (err, req, res) => {
   // A> API
   if (req.originalUrl.startsWith('/api')) {
     //Operational , Trusted Error
+    console.log(err);
+
     if (err.isOperational) {
       return res.status(err.statusCode).json({
         status: err.status,
@@ -54,7 +57,7 @@ const sendErrorProd = (err, req, res) => {
     logger.error(`Error found. ||| ${err.message}`);
     return res.status(500).json({
       status: err,
-      message: 'Something went very wrong.',
+      message: `${err._message}`,
     });
   }
   // B> RENDERED WEBSITE
