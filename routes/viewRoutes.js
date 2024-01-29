@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get(
   '/',
-  bookingController.createBookingCheckout,
+  // bookingController.createBookingCheckout,   This middleware is not needed anymore because we are using Web hooks that only work after production.
   authController.isLoggedIn,
   viewController.getOverview,
 );

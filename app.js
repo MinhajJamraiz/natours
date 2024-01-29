@@ -13,15 +13,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const cors = require('cors');
-
 const rateLimit = require('express-rate-limit');
+
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const bookingRouter = require('./routes/bookingRoutes');
-
 const viewRouter = require('./routes/viewRoutes');
-
+const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controller/bookingController');
 const globalErrorHandler = require('./controller/errorController');
 const AppError = require('./utils/appError');
 
@@ -59,6 +58,11 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter);
 
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout,
+);
 //Body parser Middleware: Reading data from the body into req.body.
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: true, limit: '10kb' }));
