@@ -80,4 +80,4 @@ if (bookBtn) {
 }
 
 const alertMessage = document.querySelector('body').dataset.alert;
-if (alert) showAlert('success', message, 15);
+if (alert) showAlert('success', alertMessage, 15);
