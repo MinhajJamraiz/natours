@@ -9,19 +9,19 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
-    this.from = `Natours Family <mjamraiz@gmail.com>`;
+    this.from = `Natours Family <${process.env.EMAIL_FROM}>`;
   }
   newTransport() {
-    // if (process.env.NODE_ENV === 'production') {
-    //   return nodemailer.createTransport({
-    //     service: process.env.SMTP_SERVICE,
+    if (process.env.NODE_ENV === 'production') {
+      return nodemailer.createTransport({
+        service: process.env.SMTP_SERVICE,
 
-    //     auth: {
-    //       user: process.env.SMTP_LOGIN,
-    //       pass: process.env.SMTP_PASSWORD,
-    //     },
-    //   });
-    // }
+        auth: {
+          user: process.env.SMTP_LOGIN,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      });
+    }
 
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
@@ -50,7 +50,7 @@ module.exports = class Email {
       // html
     };
     //3>Create a transport and send email
-    logger.info('Just before mail sending.');
+
     await this.newTransport().sendMail(mailOptions);
   }
   async sendWelcome() {

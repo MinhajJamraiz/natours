@@ -35,6 +35,8 @@ const createSendToken = (user, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  logger.info('Just before user create.');
+
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
@@ -45,10 +47,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordResetToken: req.body.passwordResetToken,
     passwordResetExpires: req.body.passwordResetExpires,
   });
+  logger.info('Just before email in auth.');
 
   const url = `${req.protocol}://${req.get('host')}/me`;
-  logger.info(`${req.get('host')}`);
-
   await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, res);
