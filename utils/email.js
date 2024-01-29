@@ -12,16 +12,16 @@ module.exports = class Email {
     this.from = `Natours Family <mjamraiz@gmail.com>`;
   }
   newTransport() {
-    if (process.env.NODE_ENV === 'production') {
-      return nodemailer.createTransport({
-        service: process.env.SMTP_SERVICE,
+    // if (process.env.NODE_ENV === 'production') {
+    //   return nodemailer.createTransport({
+    //     service: process.env.SMTP_SERVICE,
 
-        auth: {
-          user: process.env.SMTP_LOGIN,
-          pass: process.env.SMTP_PASSWORD,
-        },
-      });
-    }
+    //     auth: {
+    //       user: process.env.SMTP_LOGIN,
+    //       pass: process.env.SMTP_PASSWORD,
+    //     },
+    //   });
+    // }
 
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
