@@ -5,7 +5,7 @@ const authController = require('./../controller/authController');
 const bookingController = require('./../controller/bookingController');
 
 const router = express.Router();
-
+router.use(viewController.alerts);
 router.get(
   '/',
   // bookingController.createBookingCheckout,   This middleware is not needed anymore because we are using Web hooks that only work after production.
