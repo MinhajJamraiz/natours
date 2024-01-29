@@ -47,13 +47,11 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordResetToken: req.body.passwordResetToken,
     passwordResetExpires: req.body.passwordResetExpires,
   });
-  logger.info('Just before email in auth.');
 
   const url = `${req.protocol}://${req.get('host')}/me`;
   await new Email(newUser, url).sendWelcome();
 
   createSendToken(newUser, 201, res);
-  logger.info('User Signup Successful.');
 });
 
 exports.login = catchAsync(async (req, res, next) => {
