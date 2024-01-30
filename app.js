@@ -60,7 +60,7 @@ app.use('/api', limiter);
 
 app.post(
   '/webhook-checkout',
-  express.raw({ type: 'application/json' }),
+  express.json({ type: 'application/json' }),
   bookingController.webhookCheckout,
 );
 //Body parser Middleware: Reading data from the body into req.body.
