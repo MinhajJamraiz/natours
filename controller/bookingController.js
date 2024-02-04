@@ -12,7 +12,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(req.params.tourId);
 
   //2> Create checkout session
-  const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+  const stripe = Stripe(`${process.env.STRIPE_SECRET_KEY}`);
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
     mode: 'payment',
@@ -68,14 +68,15 @@ const createBookingCheckout = async (session) => {
   await Booking.create({ tour, user, price });
 };
 
-exports.webhookCheckout = (req, res, next) => {
-  const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+exports.webhookCheckout = async (req, res, next) => {
+  const stripe = Stripe(`${process.env.STRIPE_SECRET_KEY}`);
   const signature = req.headers['stripe-signature'];
+  console.log(signature);
   logger.info('Before Event');
 
   let event;
   try {
-    event = stripe.webhooks.constructEvent(
+    event = await stripe.webhooks.constructEvent(
       req.body,
       signature,
       process.env.STRIPE_WEBHOOK_CHECKOUT_SESSION_COMPLETED_SECRET,
